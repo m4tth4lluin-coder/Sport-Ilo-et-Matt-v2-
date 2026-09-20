@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0f1117">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Lafay TRX Lab">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<title>Lafay × TRX Lab</title>
+<style>
+:root{--bg:#0f1117;--panel:#171b23;--panel2:#202632;--line:#303847;--txt:#f5f7fa;--muted:#9ba7b7;--green:#b7e04a;--blue:#59b6e9;--pink:#e765b2;--red:#e76f51}
+*{box-sizing:border-box}html{background:var(--bg);-webkit-text-size-adjust:100%}body{margin:0;background:var(--bg);color:var(--txt);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;padding-bottom:92px;-webkit-tap-highlight-color:transparent}.app{max-width:780px;margin:auto}.top{position:sticky;top:0;z-index:20;padding:calc(12px + env(safe-area-inset-top)) 16px 12px;background:rgba(15,17,23,.94);backdrop-filter:blur(12px);border-bottom:1px solid #252b35}.toprow{display:flex;justify-content:space-between;align-items:center;gap:12px}.brand{font-weight:950}.brand b{color:var(--green)}.sync{font-size:12px;color:var(--muted)}main{padding:16px}.view{display:none}.view.active{display:block}.hero{background:linear-gradient(135deg,#20272f,#151922);border:1px solid var(--line);border-radius:22px;padding:20px}.hero h1{margin:0 0 6px;font-size:27px}.hero p{margin:0;color:var(--muted);line-height:1.4}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:14px}.label{font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:800}.big{font-size:25px;font-weight:950;margin-top:4px}.section{margin:22px 2px 10px;font-size:17px;font-weight:900}.person{display:grid;grid-template-columns:1fr 1fr;gap:8px}.person button,.weeks button,.btn,.nav button{border:1px solid var(--line);background:var(--panel2);color:var(--txt);border-radius:13px;min-height:44px;font-weight:850}.person button.on.matt{color:#b9e6ff;border-color:#3f738a;background:#18303b}.person button.on.ilo{color:#ffd0e9;border-color:#804266;background:#3a2033}.weeks{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.weeks button{font-size:12px;padding:8px 2px}.weeks button.on{color:#e8f9b7;border-color:#6e8e28;background:#26320f}.exercise{margin:10px 0}.exhead{display:flex;gap:10px;align-items:center}.code{width:46px;height:46px;border-radius:14px;background:var(--green);color:#10130b;display:grid;place-items:center;font-weight:950;flex:none}.exname{font-weight:950}.sub{font-size:12px;color:var(--muted);margin-top:3px}.desc{font-size:13px;color:#d9dee6;line-height:1.45;margin:11px 0}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.field label{display:block;font-size:11px;color:var(--muted);margin:0 0 4px 2px}.field input{width:100%;border:1px solid var(--line);background:#10141b;color:var(--txt);border-radius:11px;padding:11px;font-size:16px}.sets{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:8px}.btn{width:100%;padding:11px 14px}.btn.primary{background:var(--green);color:#11140a;border-color:var(--green)}.history{display:grid;gap:8px}.pill{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:5px 8px;font-size:11px;color:var(--muted)}.combo{display:grid;grid-template-columns:54px 1fr;gap:12px;align-items:center}.combo .n{font-size:22px;font-weight:950;color:var(--pink)}.empty{color:var(--muted);text-align:center;padding:26px}.nav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(15,17,23,.96);border-top:1px solid #292f39;padding:8px 8px calc(8px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(5,1fr);gap:5px}.nav button{background:transparent;border:none;color:var(--muted);font-size:11px;display:grid;gap:3px;place-items:center}.nav button.on{color:var(--green)}.nav .ico{font-size:18px}.toast{position:fixed;left:50%;bottom:94px;transform:translateX(-50%) translateY(20px);background:#222a35;border:1px solid #3b4655;border-radius:12px;padding:10px 14px;opacity:0;pointer-events:none;transition:.2s;z-index:50}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}.access{max-width:520px;margin:45px auto;padding:20px}.access input{width:100%;font-size:16px;padding:13px;border-radius:12px;border:1px solid var(--line);background:#0d1117;color:var(--txt)}.tip{border-color:#42502c;background:linear-gradient(135deg,#1a2114,#171b23)}@media(min-width:620px){.grid{grid-template-columns:repeat(4,1fr)}.fields{grid-template-columns:2fr 1fr 1fr}.sets{grid-template-columns:repeat(6,1fr)}}
+</style>
+</head>
+<body>
+<div id="gate" class="access" hidden>
+  <div class="hero"><div class="label">Accès partagé</div><h1>Lafay × TRX Lab</h1><p>Entre le code commun Matt & Ilo.</p></div>
+  <div class="card" style="margin-top:12px"><input id="tokenInput" placeholder="Code d’accès"><button class="btn primary" id="enterBtn" style="margin-top:10px">Entrer</button></div>
+</div>
+<div id="app" class="app" hidden>
+  <div class="top"><div class="toprow"><div class="brand">LAFAY × TRX <b>LAB</b></div><div class="sync" id="syncTxt">● connexion…</div></div></div>
+  <main>
+    <section id="home" class="view active">
+      <div class="hero"><div class="label">Matt & Ilo</div><h1>Votre Lab partagé.</h1><p>Android + iPhone, mêmes données, même progression.</p></div>
+      <div class="grid" style="margin-top:10px">
+        <div class="card"><div class="label">Matt</div><div class="big" id="hmatt">S1</div><div class="sub" id="hmattsets">2 séries</div></div>
+        <div class="card"><div class="label">Ilo</div><div class="big" id="hilo">S1</div><div class="sub" id="hilosets">2 séries</div></div>
+        <div class="card"><div class="label">Séances</div><div class="big" id="hcount">0</div><div class="sub">synchronisées</div></div>
+        <div class="card"><div class="label">Dernière sync</div><div class="big" style="font-size:17px" id="hsync">—</div><div class="sub">serveur commun</div></div>
+      </div>
+      <div class="section">Installation téléphone</div>
+      <div class="card tip"><b>Android :</b> Chrome → ⋮ → Ajouter à l’écran d’accueil.<br><br><b>iPhone :</b> Safari → Partager → Sur l’écran d’accueil.</div>
+      <div class="section">Dernière activité</div>
+      <div class="card" id="last">Aucune séance pour l’instant.</div>
+      <div class="section">Partager à Ilo</div>
+      <div class="card"><p class="sub">Le lien d’invitation contient votre accès commun.</p><button class="btn primary" id="shareBtn">Partager le lien d’accès</button></div>
+    </section>
+    <section id="session" class="view">
+      <div class="section" style="margin-top:2px">Qui s’entraîne ?</div>
+      <div class="person"><button id="pmatt" class="on matt">Matt</button><button id="pilo">Ilo</button></div>
+      <div class="section">Semaine Lafay</div>
+      <div class="card"><div class="weeks" id="weeks"></div><div class="sub" id="weekInfo" style="margin-top:9px"></div></div>
+      <div class="section">Séance</div><div id="exerciseList"></div>
+      <button class="btn primary" id="saveSession">Enregistrer la séance</button>
+    </section>
+    <section id="exercises" class="view"><div class="section" style="margin-top:2px">Bibliothèque des exercices</div><div id="lib"></div></section>
+    <section id="progress" class="view"><div class="section" style="margin-top:2px">Historique partagé</div><div id="history" class="history"></div></section>
+    <section id="vi" class="view"><div class="hero"><div class="label">Side quest</div><h1 style="color:var(--pink)">Projet Vi 🥊</h1><p>Vos cinq combos pattes d’ours.</p></div><div id="combos" style="margin-top:10px"></div></section>
+  </main>
+</div>
+<div class="toast" id="toast"></div>
+<nav class="nav" id="nav" hidden>
+<button data-v="home" class="on"><span class="ico">⌂</span>Accueil</button>
+<button data-v="session"><span class="ico">＋</span>Séance</button>
+<button data-v="exercises"><span class="ico">◫</span>Exos</button>
+<button data-v="progress"><span class="ico">↗</span>Suivi</button>
+<button data-v="vi"><span class="ico">🥊</span>Vi</button>
+</nav>
+<script>
+const API="https://nmspnlpeulgpqwfycygz.supabase.co/functions/v1/lafay-trx-lab";
+const EX=[
+["A1","TRX Chest Press","Pecs • triceps • gainage","Dos à l’ancrage, corps gainé comme une planche inclinée. Descends la poitrine entre les poignées puis repousse."],
+["D","TRX Close-Grip Press","Triceps • pecs","Même position, mains serrées et coudes proches du corps. Descends puis repousse sans ouvrir les coudes."],
+["C1","TRX Row supination","Dos • biceps","Face à l’ancrage, corps incliné, paumes vers toi. Tire la poitrine vers les poignées puis redescends sous contrôle."],
+["E","Squat 1 jambe assisté","Cuisses • fessiers","Face à l’ancrage, une jambe levée. Descends sur la jambe d’appui et utilise les sangles seulement pour l’équilibre."],
+["F","Squat sauté","Jambes • explosivité","Squat propre puis saut vertical. Réception souple, genoux dans l’axe."],
+["G","Reverse crunch","Abdos","Allongé sur le dos, ramène les genoux vers toi en décollant légèrement le bassin, sans élan."],
+["K2","TRX Triceps Extension","Triceps • gainage","Dos à l’ancrage, coudes fixes près de la tête. Plie les coudes puis tends les bras pour repousser."]
+];
+const COMBOS=[["01","1–2–1–2","Vitesse / précision"],["02","1–2–3–2","Combo naturel"],["03","1–1–2–3","Entrée + explosion"],["04","2–3–2–3–2","Pression / cardio"],["05","1–2–5–6–3–2","Combo arcade Vi"]];
+let token=localStorage.getItem("lafayToken")||((location.hash.match(/token=([^&]+)/)||[])[1]||"");
+if(token){localStorage.setItem("lafayToken",token);history.replaceState(null,"",location.pathname)}
+let state={settings:{matt_week:1,ilo_week:1},sessions:[]},person="Matt",draft={};
+const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
+function toast(t){const e=$("#toast");e.textContent=t;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),1500)}
+async function api(method,qs="",body){const r=await fetch(API+(qs?("?"+qs):""),{method,headers:{"Authorization":"Bearer "+token,"Content-Type":"application/json"},body:body?JSON.stringify(body):undefined});if(r.status===401){localStorage.removeItem("lafayToken");token="";showGate();throw new Error("Accès refusé")}if(!r.ok)throw new Error(await r.text());return r.json()}
+function showGate(){$("#gate").hidden=false;$("#app").hidden=true;$("#nav").hidden=true}
+function showApp(){$("#gate").hidden=true;$("#app").hidden=false;$("#nav").hidden=false}
+function setsFor(w){return Math.min(6,w+1)} function weekFor(p){return +(p==="Matt"?state.settings.matt_week:state.settings.ilo_week)||1}
+function totalRows(rows){return rows.reduce((a,r)=>a+(r.sets||[]).reduce((x,y)=>x+(+y||0),0),0)}
+async function sync(){try{$("#syncTxt").textContent="● synchro…";state=await api("GET","api=state");$("#syncTxt").textContent="● synchronisé";renderAll()}catch(e){$("#syncTxt").textContent="● erreur sync"}}
+function renderAll(){const mw=+state.settings.matt_week||1,iw=+state.settings.ilo_week||1;$("#hmatt").textContent="S"+(mw===5?"5+":mw);$("#hmattsets").textContent=setsFor(mw)+" séries";$("#hilo").textContent="S"+(iw===5?"5+":iw);$("#hilosets").textContent=setsFor(iw)+" séries";$("#hcount").textContent=state.sessions.length;$("#hsync").textContent=new Date().toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"});const last=state.sessions[0];$("#last").innerHTML=last?("<b>"+last.person+" — séance "+last.session_no+"</b><div class='sub' style='margin-top:5px'>Semaine "+last.week+" • "+last.set_count+" séries • "+totalRows(last.rows)+" reps</div>"):"Aucune séance pour l’instant.";renderWeeks();renderSession();renderHistory()}
+function renderWeeks(){const w=weekFor(person);$("#weeks").innerHTML=[1,2,3,4,5].map(x=>'<button class="'+(x===w?"on":"")+'" data-w="'+x+'">S'+(x===5?"5+":x)+'<br>'+(x+1)+' séries</button>').join("");$("#weekInfo").textContent="Semaine "+(w===5?"5+":w)+" : "+setsFor(w)+" séries par exercice.";$$("#weeks button").forEach(b=>b.onclick=async()=>{await api("POST","api=settings",{person,week:+b.dataset.w});await sync()})}
+function renderSession(){const n=setsFor(weekFor(person));$("#exerciseList").innerHTML=EX.map(e=>{const d=draft[e[0]]||{sets:Array(n).fill(""),angle:"",rir:2,pain:0};if(d.sets.length!==n)d.sets=Array(n).fill("").map((_,i)=>d.sets[i]??"");draft[e[0]]=d;return '<div class="card exercise"><div class="exhead"><div class="code">'+e[0]+'</div><div><div class="exname">'+e[1]+'</div><div class="sub">'+n+' séries • '+e[2]+'</div></div></div><div class="desc">'+e[3]+'</div><div class="fields"><div class="field"><label>Réglage / angle</label><input data-code="'+e[0]+'" data-k="angle" value="'+d.angle+'"></div><div class="field"><label>RIR</label><input type="number" min="0" max="5" data-code="'+e[0]+'" data-k="rir" value="'+d.rir+'"></div><div class="field"><label>Douleur /10</label><input type="number" min="0" max="10" data-code="'+e[0]+'" data-k="pain" value="'+d.pain+'"></div></div><div class="sets">'+d.sets.map((v,i)=>'<div class="field"><label>S'+(i+1)+'</label><input type="number" min="0" data-code="'+e[0]+'" data-set="'+i+'" value="'+v+'"></div>').join("")+'</div></div>'}).join("");$$("#exerciseList input").forEach(inp=>inp.oninput=()=>{const d=draft[inp.dataset.code];if(inp.dataset.set!==undefined)d.sets[+inp.dataset.set]=inp.value;else d[inp.dataset.k]=inp.value})}
+function renderLib(){$("#lib").innerHTML=EX.map(e=>'<div class="card exercise"><div class="exhead"><div class="code">'+e[0]+'</div><div><div class="exname">'+e[1]+'</div><div class="sub">'+e[2]+'</div></div></div><div class="desc">'+e[3]+'</div></div>').join("")}
+function renderHistory(){$("#history").innerHTML=state.sessions.length?state.sessions.map(s=>'<div class="card"><b>'+s.person+' — séance '+s.session_no+'</b><div class="sub" style="margin-top:6px">Semaine '+s.week+' • '+s.set_count+' séries • '+totalRows(s.rows)+' reps • douleur max '+Math.max(...s.rows.map(r=>+r.pain||0))+'/10 • '+new Date(s.created_at).toLocaleDateString("fr-FR")+'</div></div>').join(""):'<div class="empty">Aucune séance enregistrée.</div>'}
+function renderCombos(){$("#combos").innerHTML=COMBOS.map(c=>'<div class="card combo"><div class="n">'+c[0]+'</div><div><div class="exname" style="color:var(--pink)">'+c[1]+'</div><div class="sub">'+c[2]+'</div></div></div>').join("")}
+$("#pmatt").onclick=()=>{person="Matt";$("#pmatt").className="on matt";$("#pilo").className="";draft={};renderWeeks();renderSession()}
+$("#pilo").onclick=()=>{person="Ilo";$("#pilo").className="on ilo";$("#pmatt").className="";draft={};renderWeeks();renderSession()}
+$("#saveSession").onclick=async()=>{const rows=EX.map(e=>{const d=draft[e[0]];return{code:e[0],name:e[1],angle:d.angle||"",sets:d.sets.map(v=>+v||0),rir:+d.rir||0,pain:+d.pain||0}});if(!rows.some(r=>r.sets.some(v=>v>0)))return toast("Ajoute au moins une série");await api("POST","api=session",{person,week:weekFor(person),setCount:setsFor(weekFor(person)),rows});draft={};toast("Séance enregistrée ✓");await sync()}
+$("#enterBtn").onclick=()=>{token=$("#tokenInput").value.trim();if(!token)return;localStorage.setItem("lafayToken",token);showApp();sync()}
+$("#shareBtn").onclick=async()=>{const link=location.href.split("#")[0]+"#token="+token;try{if(navigator.share)await navigator.share({title:"Lafay × TRX Lab",text:"Notre Lab partagé",url:link});else{await navigator.clipboard.writeText(link);toast("Lien copié ✓")}}catch(e){}}
+$$(".nav button").forEach(b=>b.onclick=()=>{$$(".view").forEach(v=>v.classList.remove("active"));$("#"+b.dataset.v).classList.add("active");$$(".nav button").forEach(x=>x.classList.toggle("on",x===b))});
+renderLib();renderCombos();if("serviceWorker" in navigator)navigator.serviceWorker.register("./sw.js").catch(()=>{});if(token){showApp();sync();setInterval(sync,5000)}else showGate();
+</script>
+</body></html>
