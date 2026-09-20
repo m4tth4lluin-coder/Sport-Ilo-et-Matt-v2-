@@ -1,0 +1,17 @@
+{
+  "name": "Lafay × TRX Lab",
+  "short_name": "TRX Lab",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0f1117",
+  "theme_color": "#0f1117",
+  "description": "Suivi Lafay × TRX partagé entre Matt et Ilo.",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
