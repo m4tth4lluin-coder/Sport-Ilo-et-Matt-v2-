@@ -333,7 +333,7 @@ function progressionAdvice(code,p,row){
  }
  if(lev===0){
   if(a>=50&&b>=50){
-   const pending=Math.max(0,pendingLevelZeroCount(p)-1);
+   const pending=pendingLevelZeroCount(p);
    return pending>0
     ?"✅ <b>Programme 1 validé pour cet exercice.</b> Niveau -1 optionnel pendant que "+pending+" autre"+(pending>1?"s":"")+" exercice"+(pending>1?"s":"")+" rattrape"+(pending>1?"nt":"")+" le 50/50."
     :"✅ <b>Programme 1 validé pour cet exercice.</b> Tous les exercices sont au 50/50 niveau 0.";
