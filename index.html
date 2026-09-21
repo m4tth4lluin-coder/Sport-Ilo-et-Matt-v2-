@@ -12,7 +12,7 @@
 <title>Lafay × TRX Lab</title>
 <style>
 :root{--bg:#0f1117;--panel:#171b23;--panel2:#202632;--line:#303847;--txt:#f5f7fa;--muted:#9ba7b7;--green:#b7e04a;--blue:#59b6e9;--pink:#e765b2;--red:#e76f51;--yellow:#f4c95d}
-*{box-sizing:border-box}html{background:var(--bg);-webkit-text-size-adjust:100%}body{margin:0;background:var(--bg);color:var(--txt);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;padding-bottom:94px;-webkit-tap-highlight-color:transparent}.app{max-width:820px;margin:auto}.top{position:sticky;top:0;z-index:40;padding:calc(12px + env(safe-area-inset-top)) 16px 12px;background:rgba(15,17,23,.94);backdrop-filter:blur(12px);border-bottom:1px solid #252b35}.toprow{display:flex;justify-content:space-between;align-items:center;gap:12px}.brand{font-weight:950;letter-spacing:.3px}.brand b{color:var(--green)}.sync{font-size:12px;color:var(--muted)}main{padding:16px}.view{display:none}.view.active{display:block}.hero{background:linear-gradient(135deg,#20272f,#151922);border:1px solid var(--line);border-radius:22px;padding:20px}.hero h1{margin:0 0 6px;font-size:27px}.hero p{margin:0;color:var(--muted);line-height:1.4}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:14px}.label{font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:800}.big{font-size:25px;font-weight:950;margin-top:4px}.section{margin:22px 2px 10px;font-size:17px;font-weight:900}.person{display:grid;grid-template-columns:1fr 1fr;gap:8px}.person button,.weeks button,.btn,.nav button,.tiny-btn{border:1px solid var(--line);background:var(--panel2);color:var(--txt);border-radius:13px;min-height:44px;font-weight:850}.person button.on.matt{color:#b9e6ff;border-color:#3f738a;background:#18303b}.person button.on.ilo{color:#ffd0e9;border-color:#804266;background:#3a2033}.weeks{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.weeks button{font-size:12px;padding:8px 2px}.weeks button.on{color:#e8f9b7;border-color:#6e8e28;background:#26320f}.exercise{margin:10px 0}.exhead{display:flex;gap:10px;align-items:center}.code{width:46px;height:46px;border-radius:14px;background:var(--green);color:#10130b;display:grid;place-items:center;font-weight:950;flex:none}.exname{font-weight:950}.sub{font-size:12px;color:var(--muted);margin-top:3px}.desc{font-size:13px;color:#d9dee6;line-height:1.45;margin:11px 0}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.field label{display:block;font-size:11px;color:var(--muted);margin:0 0 4px 2px}.field input,.field select,.field textarea,.editor textarea,.selector{width:100%;border:1px solid var(--line);background:#10141b;color:var(--txt);border-radius:11px;padding:11px;font-size:16px}.field textarea,.editor textarea{min-height:66px;resize:vertical}.sets{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:8px}.setbox{background:#11161e;border:1px solid #29313d;border-radius:12px;padding:8px}.setrow{display:grid;grid-template-columns:1fr 46px;gap:6px;align-items:end}.validate{height:42px;border:1px solid #597229;border-radius:10px;background:#21300e;color:#dff69e;font-weight:950}.validate.done{background:var(--green);color:#11140a}.btn{width:100%;padding:11px 14px}.btn.primary{background:var(--green);color:#11140a;border-color:var(--green)}.btn.secondary{background:#252d38}.btn.pink{background:var(--pink);color:#180c13;border-color:var(--pink)}.btn.danger{color:#ffc4b7;border-color:#744238;background:#2a1715}.row{display:flex;gap:8px;align-items:center}.row>*{min-width:0}.history{display:grid;gap:8px}.pill{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:5px 8px;font-size:11px;color:var(--muted)}.prev{margin:10px 0;padding:10px;border-radius:12px;background:#121923;border:1px solid #293443;font-size:12px;color:#bdc7d5}.convchips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.chip{border:1px solid #43502d;background:#18210f;color:#dff69e;border-radius:99px;padding:5px 8px;font-size:11px}.timer-card{position:sticky;top:66px;z-index:25;background:linear-gradient(135deg,#202914,#171b23);border-color:#52652e}.timer-display{font-size:42px;font-weight:950;letter-spacing:2px;text-align:center;color:var(--green)}.timer-actions{display:grid;grid-template-columns:2fr 1fr 1fr;gap:7px;margin-top:8px}.elapsed{font-size:12px;color:var(--muted);text-align:center;margin-top:5px}.chart-card{margin:10px 0}.chart-card canvas{width:100%;height:180px;background:#11161e;border-radius:12px;margin-top:8px}.filters{display:grid;grid-template-columns:1fr 1fr;gap:8px}.calendar-head{display:flex;align-items:center;justify-content:space-between;gap:8px}.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:10px}.cal-dow{text-align:center;color:var(--muted);font-size:10px;padding:5px 0}.cal-day{min-height:58px;border:1px solid #28303b;border-radius:9px;background:#11161e;padding:5px;font-size:11px}.cal-day.off{opacity:.35}.cal-day.today{border-color:var(--green)}.dots{display:flex;gap:3px;flex-wrap:wrap;margin-top:6px}.dotm,.doti{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-size:9px;font-weight:950}.dotm{background:#18394b;color:#b9e6ff}.doti{background:#47263c;color:#ffd0e9}.summary-overlay{position:fixed;inset:0;background:rgba(4,6,9,.82);z-index:100;display:grid;place-items:center;padding:18px}.summary-overlay[hidden]{display:none}.summary-box{width:min(520px,100%);max-height:90vh;overflow:auto;background:#171b23;border:1px solid #3b4655;border-radius:22px;padding:18px}.summary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:12px 0}.stat{background:#10141b;border:1px solid #2c3542;border-radius:13px;padding:12px}.stat b{display:block;font-size:22px;color:var(--green)}.combo{display:grid;grid-template-columns:54px 1fr;gap:12px;align-items:center}.combo .n{font-size:22px;font-weight:950;color:var(--pink)}.vi-display{text-align:center;font-size:52px;font-weight:950;color:var(--pink);margin:8px 0}.vi-combo{font-size:28px;font-weight:950;text-align:center;letter-spacing:2px;margin:12px 0}.vi-controls{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.empty{color:var(--muted);text-align:center;padding:26px}.nav{position:fixed;left:0;right:0;bottom:0;z-index:50;background:rgba(15,17,23,.96);border-top:1px solid #292f39;padding:8px 8px calc(8px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(5,1fr);gap:5px}.nav button{background:transparent;border:none;color:var(--muted);font-size:11px;display:grid;gap:3px;place-items:center}.nav button.on{color:var(--green)}.nav .ico{font-size:18px}.toast{position:fixed;left:50%;bottom:98px;transform:translateX(-50%) translateY(20px);background:#222a35;border:1px solid #3b4655;border-radius:12px;padding:10px 14px;opacity:0;pointer-events:none;transition:.2s;z-index:120}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}.access{max-width:520px;margin:45px auto;padding:20px}.access input{width:100%;font-size:16px;padding:13px;border-radius:12px;border:1px solid var(--line);background:#0d1117;color:var(--txt)}.tip{border-color:#42502c;background:linear-gradient(135deg,#1a2114,#171b23)}@media(min-width:620px){.grid{grid-template-columns:repeat(4,1fr)}.fields{grid-template-columns:2fr 1fr 1fr}.sets{grid-template-columns:repeat(3,minmax(0,1fr))}.summary-grid{grid-template-columns:repeat(4,1fr)}}
+*{box-sizing:border-box}html{background:var(--bg);-webkit-text-size-adjust:100%}body{margin:0;background:var(--bg);color:var(--txt);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;padding-bottom:94px;-webkit-tap-highlight-color:transparent}.app{max-width:820px;margin:auto}.top{position:sticky;top:0;z-index:40;padding:calc(12px + env(safe-area-inset-top)) 16px 12px;background:rgba(15,17,23,.94);backdrop-filter:blur(12px);border-bottom:1px solid #252b35}.toprow{display:flex;justify-content:space-between;align-items:center;gap:12px}.brand{font-weight:950;letter-spacing:.3px}.brand b{color:var(--green)}.sync{font-size:12px;color:var(--muted)}main{padding:16px}.view{display:none}.view.active{display:block}.hero{background:linear-gradient(135deg,#20272f,#151922);border:1px solid var(--line);border-radius:22px;padding:20px}.hero h1{margin:0 0 6px;font-size:27px}.hero p{margin:0;color:var(--muted);line-height:1.4}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:14px}.label{font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:800}.big{font-size:25px;font-weight:950;margin-top:4px}.section{margin:22px 2px 10px;font-size:17px;font-weight:900}.person{display:grid;grid-template-columns:1fr 1fr;gap:8px}.person button,.weeks button,.btn,.nav button,.tiny-btn{border:1px solid var(--line);background:var(--panel2);color:var(--txt);border-radius:13px;min-height:44px;font-weight:850}.person button.on.matt{color:#b9e6ff;border-color:#3f738a;background:#18303b}.person button.on.ilo{color:#ffd0e9;border-color:#804266;background:#3a2033}.weeks{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.weeks button{font-size:12px;padding:8px 2px}.weeks button.on{color:#e8f9b7;border-color:#6e8e28;background:#26320f}.exercise{margin:10px 0}.exhead{display:flex;gap:10px;align-items:center}.code{width:46px;height:46px;border-radius:14px;background:var(--green);color:#10130b;display:grid;place-items:center;font-weight:950;flex:none}.exname{font-weight:950}.sub{font-size:12px;color:var(--muted);margin-top:3px}.desc{font-size:13px;color:#d9dee6;line-height:1.45;margin:11px 0}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.field label{display:block;font-size:11px;color:var(--muted);margin:0 0 4px 2px}.field input,.field select,.field textarea,.editor textarea,.selector{width:100%;border:1px solid var(--line);background:#10141b;color:var(--txt);border-radius:11px;padding:11px;font-size:16px}.field textarea,.editor textarea{min-height:66px;resize:vertical}.sets{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:8px}.setbox{background:#11161e;border:1px solid #29313d;border-radius:12px;padding:8px}.setrow{display:grid;grid-template-columns:1fr 46px;gap:6px;align-items:end}.validate{height:42px;border:1px solid #597229;border-radius:10px;background:#21300e;color:#dff69e;font-weight:950}.validate.done{background:var(--green);color:#11140a}.btn{width:100%;padding:11px 14px}.btn.primary{background:var(--green);color:#11140a;border-color:var(--green)}.btn.secondary{background:#252d38}.btn.pink{background:var(--pink);color:#180c13;border-color:var(--pink)}.btn.danger{color:#ffc4b7;border-color:#744238;background:#2a1715}.row{display:flex;gap:8px;align-items:center}.row>*{min-width:0}.history{display:grid;gap:8px}.pill{display:inline-block;border:1px solid var(--line);border-radius:99px;padding:5px 8px;font-size:11px;color:var(--muted)}.prev{margin:10px 0;padding:10px;border-radius:12px;background:#121923;border:1px solid #293443;font-size:12px;color:#bdc7d5}.convchips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.chip{border:1px solid #43502d;background:#18210f;color:#dff69e;border-radius:99px;padding:5px 8px;font-size:11px}.timer-card{position:sticky;top:66px;z-index:25;background:linear-gradient(135deg,#202914,#171b23);border-color:#52652e}.cal-timer{background:linear-gradient(135deg,#1c2631,#171b23);border-color:#365873}.cal-active{border-color:var(--blue);box-shadow:0 0 0 1px rgba(89,182,233,.22) inset}.cal-target{margin-top:8px;padding:9px 10px;border-radius:11px;background:#17210f;border:1px solid #3d5128;color:#dcf4a2;font-size:12px}.cal-actions{display:grid;grid-template-columns:2fr 1fr;gap:8px;margin-top:8px}.timer-display{font-size:42px;font-weight:950;letter-spacing:2px;text-align:center;color:var(--green)}.timer-actions{display:grid;grid-template-columns:2fr 1fr 1fr;gap:7px;margin-top:8px}.elapsed{font-size:12px;color:var(--muted);text-align:center;margin-top:5px}.chart-card{margin:10px 0}.chart-card canvas{width:100%;height:180px;background:#11161e;border-radius:12px;margin-top:8px}.filters{display:grid;grid-template-columns:1fr 1fr;gap:8px}.calendar-head{display:flex;align-items:center;justify-content:space-between;gap:8px}.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:10px}.cal-dow{text-align:center;color:var(--muted);font-size:10px;padding:5px 0}.cal-day{min-height:58px;border:1px solid #28303b;border-radius:9px;background:#11161e;padding:5px;font-size:11px}.cal-day.off{opacity:.35}.cal-day.today{border-color:var(--green)}.dots{display:flex;gap:3px;flex-wrap:wrap;margin-top:6px}.dotm,.doti{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-size:9px;font-weight:950}.dotm{background:#18394b;color:#b9e6ff}.doti{background:#47263c;color:#ffd0e9}.summary-overlay{position:fixed;inset:0;background:rgba(4,6,9,.82);z-index:100;display:grid;place-items:center;padding:18px}.summary-overlay[hidden]{display:none}.summary-box{width:min(520px,100%);max-height:90vh;overflow:auto;background:#171b23;border:1px solid #3b4655;border-radius:22px;padding:18px}.summary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:12px 0}.stat{background:#10141b;border:1px solid #2c3542;border-radius:13px;padding:12px}.stat b{display:block;font-size:22px;color:var(--green)}.combo{display:grid;grid-template-columns:54px 1fr;gap:12px;align-items:center}.combo .n{font-size:22px;font-weight:950;color:var(--pink)}.vi-display{text-align:center;font-size:52px;font-weight:950;color:var(--pink);margin:8px 0}.vi-combo{font-size:28px;font-weight:950;text-align:center;letter-spacing:2px;margin:12px 0}.vi-controls{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.empty{color:var(--muted);text-align:center;padding:26px}.nav{position:fixed;left:0;right:0;bottom:0;z-index:50;background:rgba(15,17,23,.96);border-top:1px solid #292f39;padding:8px 8px calc(8px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(6,1fr);gap:4px}.nav button{background:transparent;border:none;color:var(--muted);font-size:11px;display:grid;gap:3px;place-items:center}.nav button.on{color:var(--green)}.nav .ico{font-size:18px}.toast{position:fixed;left:50%;bottom:98px;transform:translateX(-50%) translateY(20px);background:#222a35;border:1px solid #3b4655;border-radius:12px;padding:10px 14px;opacity:0;pointer-events:none;transition:.2s;z-index:120}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}.access{max-width:520px;margin:45px auto;padding:20px}.access input{width:100%;font-size:16px;padding:13px;border-radius:12px;border:1px solid var(--line);background:#0d1117;color:var(--txt)}.tip{border-color:#42502c;background:linear-gradient(135deg,#1a2114,#171b23)}@media(min-width:620px){.grid{grid-template-columns:repeat(4,1fr)}.fields{grid-template-columns:2fr 1fr 1fr}.sets{grid-template-columns:repeat(3,minmax(0,1fr))}.summary-grid{grid-template-columns:repeat(4,1fr)}}
 </style>
 </head>
 <body>
@@ -60,6 +60,28 @@
       <div id="exerciseList"></div>
       <div class="field" style="margin:10px 0 12px"><label>Note globale de séance</label><textarea id="sessionNote" placeholder="Énergie, gêne, réglage à retenir, etc."></textarea></div>
       <button class="btn primary" id="saveSession">Enregistrer la séance</button>
+    </section>
+
+    <section id="calibration" class="view">
+      <div class="hero"><div class="label">Calibration</div><h1>Séance 0</h1><p>Pour chaque exercice : choisis le niveau de difficulté, fais un maximum de <b>répétitions propres en 60 secondes</b>, puis l’app calcule une cible de départ pour la Séance 1.</p></div>
+      <div class="card tip" style="margin-top:10px"><b>Calcul de départ :</b> cible S1 = environ <b>70 %</b> du score de la Séance 0, arrondi à l’entier inférieur. Pour E, on garde la jambe la plus faible. Si la technique se dégrade, on arrête de compter même si le chrono continue.</div>
+
+      <div class="section">Qui se calibre ?</div>
+      <div class="person"><button id="pmatt0" class="on matt">Matt</button><button id="pilo0">Ilo</button></div>
+
+      <div class="section">Chrono test</div>
+      <div class="card cal-timer">
+        <div class="label" id="calTimerLabel">Choisis un exercice</div>
+        <div class="timer-display" id="calTimer">01:00</div>
+        <div class="cal-actions">
+          <button class="btn primary" id="calTimerStart">Démarrer 60 s</button>
+          <button class="btn secondary" id="calTimerReset">Reset</button>
+        </div>
+      </div>
+
+      <div class="section">Tests</div>
+      <div id="calibrationList"></div>
+      <button class="btn primary" id="saveCalibration">Enregistrer la Séance 0</button>
     </section>
 
     <section id="exercises" class="view">
@@ -138,6 +160,7 @@
 <nav class="nav" id="nav" hidden>
 <button data-v="home" class="on"><span class="ico">⌂</span>Accueil</button>
 <button data-v="session"><span class="ico">＋</span>Séance</button>
+<button data-v="calibration"><span class="ico">0</span>S0</button>
 <button data-v="exercises"><span class="ico">◫</span>Exos</button>
 <button data-v="progress"><span class="ico">↗</span>Suivi</button>
 <button data-v="vi"><span class="ico">🥊</span>Vi</button>
@@ -167,9 +190,10 @@ const COMBOS=[
 
 let token=localStorage.getItem("lafayToken")||((location.hash.match(/token=([^&]+)/)||[])[1]||"");
 if(token){localStorage.setItem("lafayToken",token);history.replaceState(null,"",location.pathname)}
-let state={settings:{matt_week:1,ilo_week:1,exercise_config:{}},sessions:[]};
+let state={settings:{matt_week:1,ilo_week:1,exercise_config:{}},sessions:[],calibrations:[]};
 let person="Matt",draft={},sessionStarted=null,calDate=new Date();
 let restRemaining=120,restInt=null;
+let calDraft={},calTimerRemaining=60,calTimerInt=null,calCurrentCode="";
 let vi={running:false,phase:"ready",remaining:120,round:0,int:null};
 
 const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
@@ -241,7 +265,7 @@ function renderAll(){
  $("#hcount").textContent=state.sessions.length;$("#hsync").textContent=new Date().toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"});
  const last=state.sessions[0];
  $("#last").innerHTML=last?'<b>'+last.person+' — séance '+last.session_no+'</b><div class="sub" style="margin-top:5px">'+new Date(last.created_at).toLocaleString("fr-FR")+' • '+sessionTotal(last)+' reps • '+fmtTime(last.duration_seconds||0)+'</div>':"Aucune séance pour l’instant.";
- renderWeeks();renderSession();renderLib();renderProgress();renderCombos();
+ renderWeeks();renderCalibration();renderSession();renderLib();renderProgress();renderCombos();
 }
 function renderWeeks(){
  const w=weekFor(person);
@@ -257,11 +281,35 @@ function levelInput(e,d){
  }));
  return '<select data-code="'+e.code+'" data-k="level">'+opts.join("")+'</select>';
 }
+function calibrationFor(p){
+ return (state.calibrations||[]).find(x=>x.person===p)||null;
+}
+function calibrationRow(code,p=person){
+ const cal=calibrationFor(p);
+ return cal?(cal.rows||[]).find(r=>r.code===code)||null:null;
+}
+function calibrationScore(r){
+ if(!r)return 0;
+ if(r.code==="E"){
+  const l=+r.left_reps||0,rr=+r.right_reps||0;
+  return l&&rr?Math.min(l,rr):Math.max(l,rr);
+ }
+ return +r.reps||0;
+}
+function calibrationTarget(r){
+ const score=calibrationScore(r);
+ return score>0?Math.max(1,Math.floor(score*.70)):0;
+}
+function calLevelSelect(code,value){
+ const levels=[5,4,3,2,1,0,-1,-2,-3,-4,-5];
+ return '<select data-cal-code="'+code+'" data-cal-k="level"><option value="">Choisir…</option>'+levels.map(n=>'<option value="'+n+'" '+(String(value??"")===String(n)?"selected":"")+'>'+n+(n===5?' — plus facile':n===0?' — référence':n===-5?' — plus difficile':'')+'</option>').join("")+'</select>';
+}
 function renderSession(){
  const n=setsFor(weekFor(person));
  $("#exerciseList").innerHTML=EX.map(e=>{
   const prev=lastRow(e.code,person);
-  const d=draft[e.code]||{sets:Array(n).fill(""),level:"",rir:2,pain:0,note:"",validated:Array(n).fill(false)};
+  const cal=calibrationRow(e.code,person);
+  const d=draft[e.code]||{sets:Array(n).fill(""),level:cal?String(cal.level??""):"",rir:2,pain:0,note:"",validated:Array(n).fill(false)};
   if(d.sets.length!==n)d.sets=Array(n).fill("").map((_,i)=>d.sets[i]??"");
   if(!Array.isArray(d.validated)||d.validated.length!==n)d.validated=Array(n).fill(false);
   draft[e.code]=d;
@@ -269,6 +317,10 @@ function renderSession(){
   if(prev){
    const pr=prev.row,lev=pr.level??pr.angle??"—";
    prevHtml='<div class="prev"><b>Dernière fois :</b> niveau '+esc(lev)+' — '+(pr.sets||[]).join(" / ")+' — <b>'+rowTotal(pr)+' reps</b></div>';
+  }else if(cal){
+   const score=calibrationScore(cal),target=calibrationTarget(cal);
+   const detail=cal.code==="E"?'G '+(+cal.left_reps||0)+' / D '+(+cal.right_reps||0)+' → score '+score:score+' reps';
+   prevHtml='<div class="prev"><b>Séance 0 :</b> niv. '+esc(cal.level)+' • '+detail+' en 60 s<div class="cal-target">Cible Séance 1 : <b>'+target+' reps par série</b></div></div>';
   }
   return '<div class="card exercise">'+
    '<div class="exhead"><div class="code">'+e.code+'</div><div><div class="exname">'+e.name+'</div><div class="sub">'+n+' séries • '+e.muscles+'</div></div></div>'+
@@ -292,6 +344,69 @@ function finishSet(code,i,btn){
  const d=draft[code],v=+(d.sets[i]||0);if(!v)return toast("Entre les reps avant de valider");
  d.validated[i]=true;btn.classList.add("done");startRest(120);toast("Série validée • repos lancé");
 }
+function renderCalibration(){
+ const existing=calibrationFor(person);
+ EX.forEach(e=>{
+  if(!calDraft[e.code]){
+   const old=existing?(existing.rows||[]).find(r=>r.code===e.code):null;
+   calDraft[e.code]=old?{...old}:{code:e.code,name:e.name,level:"",reps:"",left_reps:"",right_reps:""};
+  }
+ });
+ $("#pmatt0").className=person==="Matt"?"on matt":"";
+ $("#pilo0").className=person==="Ilo"?"on ilo":"";
+ $("#calibrationList").innerHTML=EX.map(e=>{
+  const d=calDraft[e.code],score=calibrationScore(d),target=calibrationTarget(d);
+  const reps=e.code==="E"
+   ?'<div class="fields"><div class="field"><label>Jambe gauche</label><input type="number" min="0" inputmode="numeric" data-cal-code="'+e.code+'" data-cal-k="left_reps" value="'+esc(d.left_reps||"")+'"></div><div class="field"><label>Jambe droite</label><input type="number" min="0" inputmode="numeric" data-cal-code="'+e.code+'" data-cal-k="right_reps" value="'+esc(d.right_reps||"")+'"></div></div>'
+   :'<div class="field"><label>Répétitions propres en 60 s</label><input type="number" min="0" inputmode="numeric" data-cal-code="'+e.code+'" data-cal-k="reps" data-cal-reps="'+e.code+'" value="'+esc(d.reps||"")+'"></div>';
+  return '<div class="card exercise '+(calCurrentCode===e.code?"cal-active":"")+'">'+
+    '<div class="exhead"><div class="code">'+e.code+'</div><div><div class="exname">'+e.name+'</div><div class="sub">'+e.muscles+'</div></div></div>'+
+    '<div class="fields" style="margin-top:10px"><div class="field"><label>Niveau de difficulté (5 à -5)</label>'+calLevelSelect(e.code,d.level)+'</div><div class="field"><label>Test</label><button class="btn secondary" data-cal-start="'+e.code+'">▶ 60 secondes</button></div></div>'+
+    reps+
+    '<div class="cal-target">'+(score>0?'Score retenu : <b>'+score+'</b> • Cible S1 : <b>'+target+' reps/série</b>':'Entre le résultat pour calculer la cible S1.')+'</div>'+
+    (e.code==="E"?'<div class="sub" style="margin-top:6px">La cible est calculée sur la jambe la plus faible.</div>':'')+
+    (e.code==="F"?'<div class="sub" style="margin-top:6px">Squat sauté : ne compte plus dès que la hauteur ou la réception se dégrade.</div>':'')+
+  '</div>';
+ }).join("");
+ $("#calibrationList input,#calibrationList select").forEach(inp=>inp.onchange=()=>{
+  const d=calDraft[inp.dataset.calCode];d[inp.dataset.calK]=inp.value;renderCalibration();
+ });
+ $("[data-cal-start]").forEach(b=>b.onclick=()=>startCalibrationTimer(b.dataset.calStart));
+}
+function drawCalibrationTimer(){
+ $("#calTimer").textContent=fmtTime(calTimerRemaining);
+ const ex=EX.find(e=>e.code===calCurrentCode);
+ $("#calTimerLabel").textContent=ex?ex.code+" — "+ex.name:"Choisis un exercice";
+}
+function startCalibrationTimer(code){
+ if(calTimerInt)clearInterval(calTimerInt);
+ calCurrentCode=code;calTimerRemaining=60;drawCalibrationTimer();renderCalibration();
+ calTimerInt=setInterval(()=>{
+  calTimerRemaining--;drawCalibrationTimer();
+  if(calTimerRemaining<=0){
+   clearInterval(calTimerInt);calTimerInt=null;beep();toast("60 secondes terminées ✓");
+   const inp=document.querySelector('[data-cal-reps="'+code+'"]');if(inp)inp.focus();
+  }
+ },1000);
+}
+function resetCalibrationTimer(){
+ if(calTimerInt)clearInterval(calTimerInt);calTimerInt=null;calTimerRemaining=60;calCurrentCode="";drawCalibrationTimer();renderCalibration();
+}
+async function saveCalibration(){
+ const rows=EX.map(e=>{
+  const d=calDraft[e.code]||{};
+  return {code:e.code,name:e.name,level:d.level===""?"":Number(d.level),reps:+d.reps||0,left_reps:+d.left_reps||0,right_reps:+d.right_reps||0,duration_seconds:60,target_reps:calibrationTarget({...d,code:e.code})};
+ }).filter(r=>r.level!==""&&(r.code==="E"?(r.left_reps>0||r.right_reps>0):r.reps>0));
+ if(!rows.length)return toast("Fais au moins un test avant d’enregistrer");
+ try{
+  await api("POST","api=calibration",{person,rows});
+  calDraft={};resetCalibrationTimer();await sync();toast("Séance 0 enregistrée ✓");
+ }catch(e){toast("Erreur d’enregistrement")}
+}
+$("#calTimerStart").onclick=()=>{if(!calCurrentCode)return toast("Choisis d’abord un exercice");startCalibrationTimer(calCurrentCode)};
+$("#calTimerReset").onclick=resetCalibrationTimer;
+$("#saveCalibration").onclick=saveCalibration;
+
 function renderLib(){
  $("#lib").innerHTML=EX.map(e=>'<div class="card exercise">'+
   '<div class="exhead"><div class="code">'+e.code+'</div><div><div class="exname">'+e.name+'</div><div class="sub">'+e.muscles+'</div></div></div>'+
@@ -428,19 +543,28 @@ function viStart(){
 function viReset(){viStopInt();vi.phase="ready";vi.round=0;vi.remaining=+$("#viWork").value||120;$("#viCurrentCombo").textContent=COMBOS[0][1];viDraw()}
 $("#viStart").onclick=viStart;$("#viPause").onclick=()=>{viStopInt();viDraw()};$("#viReset").onclick=viReset;$("#viRandom").onclick=()=>{$("#viCurrentCombo").textContent=randomCombo()};$("#viWork").onchange=()=>{if(!vi.running&&vi.phase==="ready"){vi.remaining=+$("#viWork").value||120;viDraw()}};
 
-$("#pmatt").onclick=()=>{person="Matt";$("#pmatt").className="on matt";$("#pilo").className="";draft={};sessionStarted=Date.now();renderWeeks();renderSession()};
-$("#pilo").onclick=()=>{person="Ilo";$("#pilo").className="on ilo";$("#pmatt").className="";draft={};sessionStarted=Date.now();renderWeeks();renderSession()};
+function setPerson(p){
+ person=p;draft={};calDraft={};sessionStarted=Date.now();
+ $("#pmatt").className=p==="Matt"?"on matt":"";$("#pilo").className=p==="Ilo"?"on ilo":"";
+ $("#pmatt0").className=p==="Matt"?"on matt":"";$("#pilo0").className=p==="Ilo"?"on ilo":"";
+ renderWeeks();renderCalibration();renderSession();
+}
+$("#pmatt").onclick=()=>setPerson("Matt");
+$("#pilo").onclick=()=>setPerson("Ilo");
+$("#pmatt0").onclick=()=>setPerson("Matt");
+$("#pilo0").onclick=()=>setPerson("Ilo");
 $("#enterBtn").onclick=()=>{token=$("#tokenInput").value.trim();if(!token)return;localStorage.setItem("lafayToken",token);showApp();sync()};
 $("#shareBtn").onclick=async()=>{const link=location.href.split("#")[0]+"#token="+token;try{if(navigator.share)await navigator.share({title:"Lafay × TRX Lab",text:"Notre Lab partagé",url:link});else{await navigator.clipboard.writeText(link);toast("Lien copié ✓")}}catch(e){}};
 $$(".nav button").forEach(b=>b.onclick=()=>{
  $$(".view").forEach(v=>v.classList.remove("active"));$("#"+b.dataset.v).classList.add("active");$$(".nav button").forEach(x=>x.classList.toggle("on",x===b));
  if(b.dataset.v==="progress")renderProgress();
+ if(b.dataset.v==="calibration"){renderCalibration();drawCalibrationTimer()}
  if(b.dataset.v==="session"&&!sessionStarted)sessionStarted=Date.now();
  window.scrollTo({top:0,behavior:"smooth"});
 });
 
 setInterval(()=>{$("#sessionElapsed").textContent="Séance "+fmtTime(sessionStarted?(Date.now()-sessionStarted)/1000:0)},1000);
-renderCombos();viReset();drawRest();
+renderCombos();viReset();drawRest();drawCalibrationTimer();
 if("serviceWorker" in navigator)navigator.serviceWorker.register("./sw.js").catch(()=>{});
 if(token){showApp();sync();setInterval(sync,12000)}else showGate();
 </script>
