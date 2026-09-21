@@ -566,6 +566,6 @@ $$(".nav button").forEach(b=>b.onclick=()=>{
 setInterval(()=>{$("#sessionElapsed").textContent="Séance "+fmtTime(sessionStarted?(Date.now()-sessionStarted)/1000:0)},1000);
 renderCombos();viReset();drawRest();drawCalibrationTimer();
 if("serviceWorker" in navigator)navigator.serviceWorker.register("./sw.js").catch(()=>{});
-if(token){showApp();sync();setInterval(sync,12000)}else showGate();
+if(token){showApp();renderAll();sync();setInterval(sync,12000)}else showGate();
 </script>
 </body></html>
