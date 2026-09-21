@@ -168,7 +168,7 @@ const COMBOS=[
 let token=localStorage.getItem("lafayToken")||((location.hash.match(/token=([^&]+)/)||[])[1]||"");
 if(token){localStorage.setItem("lafayToken",token);history.replaceState(null,"",location.pathname)}
 let state={settings:{matt_week:1,ilo_week:1,exercise_config:{}},sessions:[]};
-let person="Matt",draft={},sessionStarted=Date.now(),calDate=new Date();
+let person="Matt",draft={},sessionStarted=null,calDate=new Date();
 let restRemaining=120,restInt=null;
 let vi={running:false,phase:"ready",remaining:120,round:0,int:null};
 
@@ -338,7 +338,7 @@ function computeSummary(rows,duration){
 async function saveSession(){
  const rows=sessionRowsFromDraft();
  if(!rows.some(r=>rowTotal(r)>0))return toast("Ajoute au moins une série");
- const duration=Math.floor((Date.now()-sessionStarted)/1000);
+ const duration=sessionStarted?Math.floor((Date.now()-sessionStarted)/1000):0;
  const summary=computeSummary(rows,duration);
  try{
   await api("POST","api=session",{person:person,week:weekFor(person),setCount:setsFor(weekFor(person)),rows:rows,duration_seconds:duration,note:$("#sessionNote").value});
@@ -368,9 +368,8 @@ function drawChart(id,values,label){
  const nums=values.map(v=>Number(v)).filter(v=>Number.isFinite(v));
  if(!nums.length){ctx.fillText("Pas encore de données",W/2-60,H/2);return}
  let min=Math.min(...nums),max=Math.max(...nums);if(min===max){min=Math.max(0,min-1);max=max+1}
- ctx.strokeStyle="#b7e04a";ctx.lineWidth=4;ctx.beginPath();let n=0;
- values.forEach((v,i)=>{v=Number(v);if(!Number.isFinite(v))return;const x=46+(W-72)*(i/Math.max(1,values.length-1)),y=H-30-(H-58)*((v-min)/(max-min));if(n++===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);ctx.fillStyle="#b7e04a";ctx.beginPath();ctx.arc(x,y,4,0,Math.PI*2);ctx.fill();if(n===1){ctx.beginPath();ctx.moveTo(x,y)}});
- if(n>1){ctx.strokeStyle="#b7e04a";ctx.lineWidth=3;ctx.stroke()}
+ const pts=[];values.forEach((v,i)=>{v=Number(v);if(!Number.isFinite(v))return;pts.push({x:46+(W-72)*(i/Math.max(1,values.length-1)),y:H-30-(H-58)*((v-min)/(max-min))})});
+ if(pts.length){ctx.strokeStyle="#b7e04a";ctx.lineWidth=3;ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y));ctx.stroke();ctx.fillStyle="#b7e04a";pts.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,4,0,Math.PI*2);ctx.fill()})}
  ctx.fillStyle="#9ba7b7";ctx.font="11px system-ui";ctx.fillText(String(max.toFixed(max%1?1:0)),8,34);ctx.fillText(String(min.toFixed(min%1?1:0)),8,H-28);
 }
 function renderCharts(){
@@ -450,7 +449,7 @@ $$(".nav button").forEach(b=>b.onclick=()=>{
  window.scrollTo({top:0,behavior:"smooth"});
 });
 
-setInterval(()=>{$("#sessionElapsed").textContent="Séance "+fmtTime((Date.now()-sessionStarted)/1000)},1000);
+setInterval(()=>{$("#sessionElapsed").textContent="Séance "+fmtTime(sessionStarted?(Date.now()-sessionStarted)/1000:0)},1000);
 renderCombos();viReset();drawRest();
 if("serviceWorker" in navigator)navigator.serviceWorker.register("./sw.js").catch(()=>{});
 if(token){showApp();sync();setInterval(sync,12000)}else showGate();
