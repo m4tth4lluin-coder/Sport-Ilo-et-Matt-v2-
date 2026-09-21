@@ -199,6 +199,10 @@ let vi={running:false,phase:"ready",remaining:120,round:0,int:null};
 const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]))}
 function toast(t){const e=$("#toast");e.textContent=t;e.classList.add("show");setTimeout(()=>e.classList.remove("show"),1600)}
+function safeRender(fn,name){
+ try{fn()}catch(e){console.error("Render "+name,e)}
+}
+window.addEventListener("error",e=>{console.error(e.error||e.message);});
 async function api(method,qs="",body){
  const r=await fetch(API+(qs?("?"+qs):""),{method,headers:{"Authorization":"Bearer "+token,"Content-Type":"application/json"},body:body?JSON.stringify(body):undefined});
  if(r.status===401){localStorage.removeItem("lafayToken");token="";showGate();throw new Error("Accès refusé")}
@@ -265,7 +269,7 @@ function renderAll(){
  $("#hcount").textContent=state.sessions.length;$("#hsync").textContent=new Date().toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"});
  const last=state.sessions[0];
  $("#last").innerHTML=last?'<b>'+last.person+' — séance '+last.session_no+'</b><div class="sub" style="margin-top:5px">'+new Date(last.created_at).toLocaleString("fr-FR")+' • '+sessionTotal(last)+' reps • '+fmtTime(last.duration_seconds||0)+'</div>':"Aucune séance pour l’instant.";
- renderWeeks();renderCalibration();renderSession();renderLib();renderProgress();renderCombos();
+ safeRender(renderWeeks,"semaines");safeRender(renderSession,"séance");safeRender(renderLib,"exercices");safeRender(renderProgress,"suivi");safeRender(renderCombos,"boxe");
 }
 function renderWeeks(){
  const w=weekFor(person);
@@ -558,7 +562,7 @@ $("#shareBtn").onclick=async()=>{const link=location.href.split("#")[0]+"#token=
 $$(".nav button").forEach(b=>b.onclick=()=>{
  $$(".view").forEach(v=>v.classList.remove("active"));$("#"+b.dataset.v).classList.add("active");$$(".nav button").forEach(x=>x.classList.toggle("on",x===b));
  if(b.dataset.v==="progress")renderProgress();
- if(b.dataset.v==="calibration"){renderCalibration();drawCalibrationTimer()}
+ if(b.dataset.v==="calibration"){safeRender(renderCalibration,"S0");safeRender(drawCalibrationTimer,"chrono S0")}
  if(b.dataset.v==="session"&&!sessionStarted)sessionStarted=Date.now();
  window.scrollTo({top:0,behavior:"smooth"});
 });
@@ -566,6 +570,6 @@ $$(".nav button").forEach(b=>b.onclick=()=>{
 setInterval(()=>{$("#sessionElapsed").textContent="Séance "+fmtTime(sessionStarted?(Date.now()-sessionStarted)/1000:0)},1000);
 renderCombos();viReset();drawRest();drawCalibrationTimer();
 if("serviceWorker" in navigator)navigator.serviceWorker.register("./sw.js").catch(()=>{});
-if(token){showApp();renderAll();sync();setInterval(sync,12000)}else showGate();
+if(token){showApp();safeRender(renderWeeks,"semaines");safeRender(renderSession,"séance");safeRender(renderLib,"exercices");safeRender(renderCombos,"boxe");sync();setInterval(sync,12000)}else showGate();
 </script>
 </body></html>
