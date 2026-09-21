@@ -375,10 +375,10 @@ function renderCalibration(){
     (e.code==="F"?'<div class="sub" style="margin-top:6px">Squat sauté : ne compte plus dès que la hauteur ou la réception se dégrade.</div>':'')+
   '</div>';
  }).join("");
- $("#calibrationList input,#calibrationList select").forEach(inp=>inp.onchange=()=>{
+ $$("#calibrationList input,#calibrationList select").forEach(inp=>inp.onchange=()=>{
   const d=calDraft[inp.dataset.calCode];d[inp.dataset.calK]=inp.value;renderCalibration();
  });
- $("[data-cal-start]").forEach(b=>b.onclick=()=>startCalibrationTimer(b.dataset.calStart));
+ $$("[data-cal-start]").forEach(b=>b.onclick=()=>startCalibrationTimer(b.dataset.calStart));
 }
 function drawCalibrationTimer(){
  $("#calTimer").textContent=fmtTime(calTimerRemaining);
