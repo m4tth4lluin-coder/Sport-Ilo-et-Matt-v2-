@@ -63,7 +63,7 @@
     </section>
 
     <section id="exercises" class="view">
-      <div class="hero"><div class="label">Bibliothèque</div><h1>Exercices & conventions</h1><p>Chaque exercice peut avoir sa propre échelle de difficulté, partagée entre vos deux téléphones.</p></div>
+      <div class="hero"><div class="label">Bibliothèque</div><h1>Exercices & difficulté</h1><p>Une seule échelle commune pour tout : <b>5 = le plus facile</b>, <b>0 = la variante de référence</b>, <b>-5 = le plus difficile</b>.</p></div><div class="card tip" style="margin-top:10px"><b>Exemple Chest Press :</b><br>5 = pompes debout contre un mur · 0 = pompes classiques au sol · -5 = pompes en équilibre sur les mains, pieds en haut.</div>
       <div id="lib" style="margin-top:10px"></div>
     </section>
 
@@ -250,12 +250,12 @@ function renderWeeks(){
  $$("#weeks button").forEach(b=>b.onclick=async()=>{await api("POST","api=settings",{person:person,week:+b.dataset.w});await sync()});
 }
 function levelInput(e,d){
- const conv=parseConv(getConv(e.code));
- if(conv.length){
-  const opts=['<option value="">Choisir…</option>'].concat(conv.map(x=>'<option value="'+esc(x.level)+'" '+(String(d.level||"")===String(x.level)?"selected":"")+'>'+esc(x.level)+' — '+esc(x.label)+'</option>'));
-  return '<select data-code="'+e.code+'" data-k="level">'+opts.join("")+'</select>';
- }
- return '<input data-code="'+e.code+'" data-k="level" value="'+esc(d.level||"")+'" placeholder="ex. repère 2 / sangles mi-longues">';
+ const levels=[5,4,3,2,1,0,-1,-2,-3,-4,-5];
+ const opts=['<option value="">Choisir…</option>'].concat(levels.map(n=>{
+  const suffix=n===5?' — plus facile':n===0?' — référence':n===-5?' — plus difficile':'';
+  return '<option value="'+n+'" '+(String(d.level??"")===String(n)?"selected":"")+'>'+n+suffix+'</option>';
+ }));
+ return '<select data-code="'+e.code+'" data-k="level">'+opts.join("")+'</select>';
 }
 function renderSession(){
  const n=setsFor(weekFor(person));
@@ -272,9 +272,9 @@ function renderSession(){
   }
   return '<div class="card exercise">'+
    '<div class="exhead"><div class="code">'+e.code+'</div><div><div class="exname">'+e.name+'</div><div class="sub">'+n+' séries • '+e.muscles+'</div></div></div>'+
-   '<div class="desc">'+e.desc+'</div>'+convChips(e.code)+prevHtml+
+   '<div class="desc">'+e.desc+'</div>'+prevHtml+
    '<div class="fields">'+
-    '<div class="field"><label>Niveau / réglage</label>'+levelInput(e,d)+'</div>'+
+    '<div class="field"><label>Niveau de difficulté (5 à -5)</label>'+levelInput(e,d)+'</div>'+
     '<div class="field"><label>RIR</label><input type="number" min="0" max="5" data-code="'+e.code+'" data-k="rir" value="'+esc(d.rir)+'"></div>'+
     '<div class="field"><label>Douleur /10</label><input type="number" min="0" max="10" data-code="'+e.code+'" data-k="pain" value="'+esc(d.pain)+'"></div>'+
    '</div>'+
@@ -293,21 +293,11 @@ function finishSet(code,i,btn){
  d.validated[i]=true;btn.classList.add("done");startRest(120);toast("Série validée • repos lancé");
 }
 function renderLib(){
- $("#lib").innerHTML=EX.map(e=>'<div class="card exercise editor">'+
+ $("#lib").innerHTML=EX.map(e=>'<div class="card exercise">'+
   '<div class="exhead"><div class="code">'+e.code+'</div><div><div class="exname">'+e.name+'</div><div class="sub">'+e.muscles+'</div></div></div>'+
   '<div class="desc">'+e.desc+'</div>'+
-  '<label class="label">Convention de difficulté</label>'+
-  '<textarea id="conv_'+e.code+'" placeholder="Ex : 3=60°;2=30°;1=15°">'+esc(getConv(e.code))+'</textarea>'+
-  '<div class="sub" style="margin:6px 0">Format : niveau=description ; niveau=description. Laisse vide si l’exercice n’a pas besoin d’échelle.</div>'+
-  '<button class="btn secondary" data-saveconv="'+e.code+'">Enregistrer cette convention</button>'+
+  '<div class="prev"><b>Échelle commune :</b> 5 → 4 → 3 → 2 → 1 → 0 → -1 → -2 → -3 → -4 → -5<br><span class="sub">5 = variante la plus facile · 0 = variante de référence · -5 = variante la plus difficile.</span></div>'+
  '</div>').join("");
- $$("[data-saveconv]").forEach(b=>b.onclick=()=>saveConvention(b.dataset.saveconv));
-}
-async function saveConvention(code){
- const cfg=Object.assign({},state.settings.exercise_config||{});
- cfg[code]={convention:$("#conv_"+code).value.trim()};
- await api("POST","api=settings",{exercise_config:cfg});
- await sync();toast("Convention synchronisée ✓");
 }
 function startRest(sec){
  if(restInt)clearInterval(restInt);restRemaining=sec;drawRest();
