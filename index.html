@@ -27,8 +27,8 @@
     <section id="home" class="view active">
       <div class="hero"><div class="label">Matt & Ilo</div><h1>Votre Lab partagé.</h1><p>Android + iPhone, mêmes données, même progression.</p></div>
       <div class="grid" style="margin-top:10px">
-        <div class="card"><div class="label">Matt</div><div class="big" id="hmatt">P1</div><div class="sub" id="hmattsets">2 séries • objectif 50/exo</div></div>
-        <div class="card"><div class="label">Ilo</div><div class="big" id="hilo">P1</div><div class="sub" id="hilosets">2 séries • objectif 50/exo</div></div>
+        <div class="card"><div class="label">Matt</div><div class="big" id="hmatt">P1</div><div class="sub" id="hmattsets">2 séries • objectif 50/série</div></div>
+        <div class="card"><div class="label">Ilo</div><div class="big" id="hilo">P1</div><div class="sub" id="hilosets">2 séries • objectif 50/série</div></div>
         <div class="card"><div class="label">Séances</div><div class="big" id="hcount">0</div><div class="sub">synchronisées</div></div>
         <div class="card"><div class="label">Dernière sync</div><div class="big" style="font-size:17px" id="hsync">—</div><div class="sub">serveur commun</div></div>
       </div>
@@ -64,7 +64,7 @@
 
     <section id="calibration" class="view">
       <div class="hero"><div class="label">Calibration</div><h1>Séance 0</h1><p>Pour chaque exercice : choisis le niveau de difficulté, fais un maximum de <b>répétitions propres en 60 secondes</b>, puis l’app calcule une cible de départ pour la Séance 1.</p></div>
-      <div class="card tip" style="margin-top:10px"><b>Calcul de départ :</b> environ <b>70 %</b> du score du test par série, avec <b>2 séries fixes</b> et un plafond de 25 reps/série pour rester dans l’objectif de 50 reps totales. Pour E, on garde la jambe la plus faible. Si la technique se dégrade, on arrête de compter même si le chrono continue.</div>
+      <div class="card tip" style="margin-top:10px"><b>Calcul de départ :</b> environ <b>70 %</b> du score du test pour chacune des <b>2 séries fixes</b>. Objectif final du Programme 1 : <b>50 reps sur S1 + 50 reps sur S2 = 100 reps</b> par exercice. Pour E, on garde la jambe la plus faible. Si la technique se dégrade, on arrête de compter même si le chrono continue.</div>
 
       <div class="section">Qui se calibre ?</div>
       <div class="person"><button id="pmatt0" class="on matt">Matt</button><button id="pilo0">Ilo</button></div>
@@ -263,8 +263,8 @@ async function sync(){
  }catch(e){$("#syncTxt").textContent="● erreur sync"}
 }
 function renderAll(){
- $("#hmatt").textContent="P1";$("#hmattsets").textContent="2 séries • objectif 50/exo";
- $("#hilo").textContent="P1";$("#hilosets").textContent="2 séries • objectif 50/exo";
+ $("#hmatt").textContent="P1";$("#hmattsets").textContent="2 séries • objectif 50/série";
+ $("#hilo").textContent="P1";$("#hilosets").textContent="2 séries • objectif 50/série";
  $("#hcount").textContent=state.sessions.length;$("#hsync").textContent=new Date().toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"});
  const last=state.sessions[0];
  $("#last").innerHTML=last?'<b>'+last.person+' — séance '+last.session_no+'</b><div class="sub" style="margin-top:5px">'+new Date(last.created_at).toLocaleString("fr-FR")+' • '+sessionTotal(last)+' reps • '+fmtTime(last.duration_seconds||0)+'</div>':"Aucune séance pour l’instant.";
@@ -273,7 +273,7 @@ function renderAll(){
 function renderWeeks(){
  $("#weeks").style.gridTemplateColumns="1fr";
  $("#weeks").innerHTML='<button class="on" disabled>Programme 1<br>2 séries fixes</button>';
- $("#weekInfo").textContent="2 séries à chaque exercice. Si la séance passe proprement, on essaie d’augmenter le nombre total de répétitions à la séance suivante. Objectif : 50 répétitions totales par exercice avant de passer au programme suivant.";
+ $("#weekInfo").textContent="2 séries à chaque exercice. Si la séance passe proprement, on augmente les répétitions à la séance suivante. Objectif final : 50 reps sur la série 1 ET 50 reps sur la série 2, soit 100 reps par exercice.";
 }
 function levelInput(e,d){
  const levels=[5,4,3,2,1,0,-1,-2,-3,-4,-5];
@@ -300,7 +300,7 @@ function calibrationScore(r){
 }
 function calibrationTarget(r){
  const score=calibrationScore(r);
- return score>0?Math.min(25,Math.max(1,Math.floor(score*.70))):0;
+ return score>0?Math.min(50,Math.max(1,Math.floor(score*.70))):0;
 }
 function calibrationTargetTotal(r){
  return calibrationTarget(r)*2;
@@ -320,14 +320,16 @@ function renderSession(){
   draft[e.code]=d;
   let prevHtml='<div class="prev">Dernière fois : aucune donnée.</div>';
   if(prev){
-   const pr=prev.row,lev=pr.level??pr.angle??"—",total=rowTotal(pr);
-   const next=Math.min(50,total+1);
-   prevHtml='<div class="prev"><b>Dernière fois :</b> niveau '+esc(lev)+' — '+(pr.sets||[]).join(" / ")+' — <b>'+total+'/50 reps</b>'+
-    '<div class="cal-target">'+(total>=50?'✅ 50 répétitions atteintes sur cet exercice.':'Prochaine cible : <b>'+next+' répétitions totales</b> sur les 2 séries, si elles restent propres.')+'</div></div>';
+   const pr=prev.row,lev=pr.level??pr.angle??"—";
+   const s1=+(pr.sets||[])[0]||0,s2=+(pr.sets||[])[1]||0,total=s1+s2;
+   const done=s1>=50&&s2>=50;
+   const next1=Math.min(50,s1+1),next2=Math.min(50,s2+1);
+   prevHtml='<div class="prev"><b>Dernière fois :</b> niveau '+esc(lev)+' — <b>S1 '+s1+'/50 • S2 '+s2+'/50</b> — '+total+'/100 reps'+
+    '<div class="cal-target">'+(done?'✅ Objectif atteint : 50 reps sur chacune des 2 séries.':'Prochaine cible si propre : <b>S1 '+next1+' • S2 '+next2+'</b>.')+'</div></div>';
   }else if(cal){
    const score=calibrationScore(cal),target=calibrationTarget(cal),targetTotal=calibrationTargetTotal(cal);
    const detail=cal.code==="E"?'G '+(+cal.left_reps||0)+' / D '+(+cal.right_reps||0)+' → score '+score:score+' reps';
-   prevHtml='<div class="prev"><b>Séance 0 :</b> niv. '+esc(cal.level)+' • '+detail+' en 60 s<div class="cal-target">Cible Séance 1 : <b>'+target+' reps/série</b> × 2 = <b>'+targetTotal+' reps totales</b>.</div></div>';
+   prevHtml='<div class="prev"><b>Séance 0 :</b> niv. '+esc(cal.level)+' • '+detail+' en 60 s<div class="cal-target">Cible Séance 1 : <b>'+target+' reps sur S1 + '+target+' reps sur S2</b> = '+targetTotal+' reps totales. Objectif final P1 : <b>50 + 50 = 100</b>.</div></div>';
   }
   return '<div class="card exercise">'+
    '<div class="exhead"><div class="code">'+e.code+'</div><div><div class="exname">'+e.name+'</div><div class="sub">'+n+' séries • '+e.muscles+'</div></div></div>'+
@@ -370,7 +372,7 @@ function renderCalibration(){
     '<div class="exhead"><div class="code">'+e.code+'</div><div><div class="exname">'+e.name+'</div><div class="sub">'+e.muscles+'</div></div></div>'+
     '<div class="fields" style="margin-top:10px"><div class="field"><label>Niveau de difficulté (5 à -5)</label>'+calLevelSelect(e.code,d.level)+'</div><div class="field"><label>Test</label><button class="btn secondary" data-cal-start="'+e.code+'">▶ 60 secondes</button></div></div>'+
     reps+
-    '<div class="cal-target">'+(score>0?'Score retenu : <b>'+score+'</b> • Cible S1 : <b>'+target+' reps/série</b> × 2 = <b>'+(target*2)+' reps totales</b>':'Entre le résultat pour calculer la cible S1.')+'</div>'+
+    '<div class="cal-target">'+(score>0?'Score retenu : <b>'+score+'</b> • Départ Séance 1 : <b>'+target+' reps sur S1 + '+target+' reps sur S2</b> = <b>'+(target*2)+' reps totales</b> • objectif final : 50 + 50':'Entre le résultat pour calculer la cible S1.')+'</div>'+
     (e.code==="E"?'<div class="sub" style="margin-top:6px">La cible est calculée sur la jambe la plus faible.</div>':'')+
     (e.code==="F"?'<div class="sub" style="margin-top:6px">Squat sauté : ne compte plus dès que la hauteur ou la réception se dégrade.</div>':'')+
   '</div>';
@@ -443,7 +445,7 @@ function computeSummary(rows,duration){
   const prev=lastRow(r.code,person,level),best=bestTotal(r.code,person,level);
   const isPr=total>best; if(isPr)prs++;
   const isImp=prev&&total>rowTotal(prev.row);if(isImp)improved++;
-  details.push((total>=50?"✅ ":(isPr?"🏆 ":""))+(isImp?"↗ ":"")+r.name+" : "+total+"/50 reps"+(level?" • niv. "+level:""));
+  const a=+(r.sets||[])[0]||0,b=+(r.sets||[])[1]||0,done=a>=50&&b>=50; details.push((done?"✅ ":(isPr?"🏆 ":""))+(isImp?"↗ ":"")+r.name+" : S1 "+a+"/50 • S2 "+b+"/50 • "+total+"/100"+(level?" • niv. "+level:""));
  });
  return {duration,total:rows.reduce((a,r)=>a+rowTotal(r),0),prs,improved,pain:Math.max(0,...rows.map(r=>+r.pain||0)),details};
 }
