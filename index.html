@@ -27,8 +27,8 @@
     <section id="home" class="view active">
       <div class="hero"><div class="label">Matt & Ilo</div><h1>Votre Lab partagé.</h1><p>Android + iPhone, mêmes données, même progression.</p></div>
       <div class="grid" style="margin-top:10px">
-        <div class="card"><div class="label">Matt</div><div class="big" id="hmatt">S1</div><div class="sub" id="hmattsets">2 séries</div></div>
-        <div class="card"><div class="label">Ilo</div><div class="big" id="hilo">S1</div><div class="sub" id="hilosets">2 séries</div></div>
+        <div class="card"><div class="label">Matt</div><div class="big" id="hmatt">P1</div><div class="sub" id="hmattsets">6 séries • objectif 50/exo</div></div>
+        <div class="card"><div class="label">Ilo</div><div class="big" id="hilo">P1</div><div class="sub" id="hilosets">6 séries • objectif 50/exo</div></div>
         <div class="card"><div class="label">Séances</div><div class="big" id="hcount">0</div><div class="sub">synchronisées</div></div>
         <div class="card"><div class="label">Dernière sync</div><div class="big" style="font-size:17px" id="hsync">—</div><div class="sub">serveur commun</div></div>
       </div>
@@ -54,7 +54,7 @@
 
       <div class="section">Qui s’entraîne ?</div>
       <div class="person"><button id="pmatt" class="on matt">Matt</button><button id="pilo">Ilo</button></div>
-      <div class="section">Semaine Lafay</div>
+      <div class="section">Programme 1</div>
       <div class="card"><div class="weeks" id="weeks"></div><div class="sub" id="weekInfo" style="margin-top:9px"></div></div>
       <div class="section">Séance</div>
       <div id="exerciseList"></div>
@@ -64,7 +64,7 @@
 
     <section id="calibration" class="view">
       <div class="hero"><div class="label">Calibration</div><h1>Séance 0</h1><p>Pour chaque exercice : choisis le niveau de difficulté, fais un maximum de <b>répétitions propres en 60 secondes</b>, puis l’app calcule une cible de départ pour la Séance 1.</p></div>
-      <div class="card tip" style="margin-top:10px"><b>Calcul de départ :</b> cible S1 = environ <b>70 %</b> du score de la Séance 0, arrondi à l’entier inférieur. Pour E, on garde la jambe la plus faible. Si la technique se dégrade, on arrête de compter même si le chrono continue.</div>
+      <div class="card tip" style="margin-top:10px"><b>Calcul de départ :</b> environ <b>70 %</b> du score du test par série, avec <b>6 séries fixes</b> et un plafond de 8 reps/série pour rester sous l’objectif de 50 reps totales. Pour E, on garde la jambe la plus faible. Si la technique se dégrade, on arrête de compter même si le chrono continue.</div>
 
       <div class="section">Qui se calibre ?</div>
       <div class="person"><button id="pmatt0" class="on matt">Matt</button><button id="pilo0">Ilo</button></div>
@@ -211,7 +211,7 @@ async function api(method,qs="",body){
 }
 function showGate(){$("#gate").hidden=false;$("#app").hidden=true;$("#nav").hidden=true}
 function showApp(){$("#gate").hidden=true;$("#app").hidden=false;$("#nav").hidden=false}
-function setsFor(w){return Math.min(6,w+1)}
+function setsFor(){return 6}
 function weekFor(p){return +(p==="Matt"?state.settings.matt_week:state.settings.ilo_week)||1}
 function rowTotal(r){return (r.sets||[]).reduce((a,v)=>a+(+v||0),0)}
 function sessionTotal(s){return (s.rows||[]).reduce((a,r)=>a+rowTotal(r),0)}
@@ -263,19 +263,17 @@ async function sync(){
  }catch(e){$("#syncTxt").textContent="● erreur sync"}
 }
 function renderAll(){
- const mw=weekFor("Matt"),iw=weekFor("Ilo");
- $("#hmatt").textContent="S"+(mw===5?"5+":mw);$("#hmattsets").textContent=setsFor(mw)+" séries";
- $("#hilo").textContent="S"+(iw===5?"5+":iw);$("#hilosets").textContent=setsFor(iw)+" séries";
+ $("#hmatt").textContent="P1";$("#hmattsets").textContent="6 séries • objectif 50/exo";
+ $("#hilo").textContent="P1";$("#hilosets").textContent="6 séries • objectif 50/exo";
  $("#hcount").textContent=state.sessions.length;$("#hsync").textContent=new Date().toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"});
  const last=state.sessions[0];
  $("#last").innerHTML=last?'<b>'+last.person+' — séance '+last.session_no+'</b><div class="sub" style="margin-top:5px">'+new Date(last.created_at).toLocaleString("fr-FR")+' • '+sessionTotal(last)+' reps • '+fmtTime(last.duration_seconds||0)+'</div>':"Aucune séance pour l’instant.";
  safeRender(renderWeeks,"semaines");safeRender(renderSession,"séance");safeRender(renderLib,"exercices");safeRender(renderProgress,"suivi");safeRender(renderCombos,"boxe");
 }
 function renderWeeks(){
- const w=weekFor(person);
- $("#weeks").innerHTML=[1,2,3,4,5].map(x=>'<button class="'+(x===w?"on":"")+'" data-w="'+x+'">S'+(x===5?"5+":x)+'<br>'+(x+1)+' séries</button>').join("");
- $("#weekInfo").textContent="Semaine "+(w===5?"5+":w)+" : "+setsFor(w)+" séries par exercice.";
- $$("#weeks button").forEach(b=>b.onclick=async()=>{await api("POST","api=settings",{person:person,week:+b.dataset.w});await sync()});
+ $("#weeks").style.gridTemplateColumns="1fr";
+ $("#weeks").innerHTML='<button class="on" disabled>Programme 1<br>6 séries fixes</button>';
+ $("#weekInfo").textContent="On augmente les répétitions, pas le nombre de séries. Objectif : atteindre 50 répétitions totales sur chacun des exercices avant de passer au programme suivant.";
 }
 function levelInput(e,d){
  const levels=[5,4,3,2,1,0,-1,-2,-3,-4,-5];
@@ -302,14 +300,17 @@ function calibrationScore(r){
 }
 function calibrationTarget(r){
  const score=calibrationScore(r);
- return score>0?Math.max(1,Math.floor(score*.70)):0;
+ return score>0?Math.min(8,Math.max(1,Math.floor(score*.70))):0;
+}
+function calibrationTargetTotal(r){
+ return calibrationTarget(r)*6;
 }
 function calLevelSelect(code,value){
  const levels=[5,4,3,2,1,0,-1,-2,-3,-4,-5];
  return '<select data-cal-code="'+code+'" data-cal-k="level"><option value="">Choisir…</option>'+levels.map(n=>'<option value="'+n+'" '+(String(value??"")===String(n)?"selected":"")+'>'+n+(n===5?' — plus facile':n===0?' — référence':n===-5?' — plus difficile':'')+'</option>').join("")+'</select>';
 }
 function renderSession(){
- const n=setsFor(weekFor(person));
+ const n=6;
  $("#exerciseList").innerHTML=EX.map(e=>{
   const prev=lastRow(e.code,person);
   const cal=calibrationRow(e.code,person);
@@ -319,12 +320,14 @@ function renderSession(){
   draft[e.code]=d;
   let prevHtml='<div class="prev">Dernière fois : aucune donnée.</div>';
   if(prev){
-   const pr=prev.row,lev=pr.level??pr.angle??"—";
-   prevHtml='<div class="prev"><b>Dernière fois :</b> niveau '+esc(lev)+' — '+(pr.sets||[]).join(" / ")+' — <b>'+rowTotal(pr)+' reps</b></div>';
+   const pr=prev.row,lev=pr.level??pr.angle??"—",total=rowTotal(pr);
+   const next=Math.min(50,total+1);
+   prevHtml='<div class="prev"><b>Dernière fois :</b> niveau '+esc(lev)+' — '+(pr.sets||[]).join(" / ")+' — <b>'+total+'/50 reps</b>'+
+    '<div class="cal-target">'+(total>=50?'✅ 50 répétitions atteintes sur cet exercice.':'Prochaine cible : <b>'+next+' répétitions totales</b> sur les 6 séries.')+'</div></div>';
   }else if(cal){
-   const score=calibrationScore(cal),target=calibrationTarget(cal);
+   const score=calibrationScore(cal),target=calibrationTarget(cal),targetTotal=calibrationTargetTotal(cal);
    const detail=cal.code==="E"?'G '+(+cal.left_reps||0)+' / D '+(+cal.right_reps||0)+' → score '+score:score+' reps';
-   prevHtml='<div class="prev"><b>Séance 0 :</b> niv. '+esc(cal.level)+' • '+detail+' en 60 s<div class="cal-target">Cible Séance 1 : <b>'+target+' reps par série</b></div></div>';
+   prevHtml='<div class="prev"><b>Séance 0 :</b> niv. '+esc(cal.level)+' • '+detail+' en 60 s<div class="cal-target">Cible Séance 1 : <b>'+target+' reps/série</b> × 6 = <b>'+targetTotal+' reps totales</b>.</div></div>';
   }
   return '<div class="card exercise">'+
    '<div class="exhead"><div class="code">'+e.code+'</div><div><div class="exname">'+e.name+'</div><div class="sub">'+n+' séries • '+e.muscles+'</div></div></div>'+
@@ -367,7 +370,7 @@ function renderCalibration(){
     '<div class="exhead"><div class="code">'+e.code+'</div><div><div class="exname">'+e.name+'</div><div class="sub">'+e.muscles+'</div></div></div>'+
     '<div class="fields" style="margin-top:10px"><div class="field"><label>Niveau de difficulté (5 à -5)</label>'+calLevelSelect(e.code,d.level)+'</div><div class="field"><label>Test</label><button class="btn secondary" data-cal-start="'+e.code+'">▶ 60 secondes</button></div></div>'+
     reps+
-    '<div class="cal-target">'+(score>0?'Score retenu : <b>'+score+'</b> • Cible S1 : <b>'+target+' reps/série</b>':'Entre le résultat pour calculer la cible S1.')+'</div>'+
+    '<div class="cal-target">'+(score>0?'Score retenu : <b>'+score+'</b> • Cible S1 : <b>'+target+' reps/série</b> × 6 = <b>'+(target*6)+' reps totales</b>':'Entre le résultat pour calculer la cible S1.')+'</div>'+
     (e.code==="E"?'<div class="sub" style="margin-top:6px">La cible est calculée sur la jambe la plus faible.</div>':'')+
     (e.code==="F"?'<div class="sub" style="margin-top:6px">Squat sauté : ne compte plus dès que la hauteur ou la réception se dégrade.</div>':'')+
   '</div>';
@@ -440,7 +443,7 @@ function computeSummary(rows,duration){
   const prev=lastRow(r.code,person,level),best=bestTotal(r.code,person,level);
   const isPr=total>best; if(isPr)prs++;
   const isImp=prev&&total>rowTotal(prev.row);if(isImp)improved++;
-  details.push((isPr?"🏆 ":"")+(isImp?"↗ ":"")+r.name+" : "+total+" reps"+(level?" • niv. "+level:""));
+  details.push((total>=50?"✅ ":(isPr?"🏆 ":""))+(isImp?"↗ ":"")+r.name+" : "+total+"/50 reps"+(level?" • niv. "+level:""));
  });
  return {duration,total:rows.reduce((a,r)=>a+rowTotal(r),0),prs,improved,pain:Math.max(0,...rows.map(r=>+r.pain||0)),details};
 }
@@ -450,7 +453,7 @@ async function saveSession(){
  const duration=sessionStarted?Math.floor((Date.now()-sessionStarted)/1000):0;
  const summary=computeSummary(rows,duration);
  try{
-  await api("POST","api=session",{person:person,week:weekFor(person),setCount:setsFor(weekFor(person)),rows:rows,duration_seconds:duration,note:$("#sessionNote").value});
+  await api("POST","api=session",{person:person,week:1,setCount:6,rows:rows,duration_seconds:duration,note:$("#sessionNote").value});
   draft={};$("#sessionNote").value="";sessionStarted=Date.now();await sync();showSummary(summary);
  }catch(e){toast("Erreur d’enregistrement")}
 }
