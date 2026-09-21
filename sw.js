@@ -1,4 +1,4 @@
-const CACHE="lafay-trx-lab-v9";
+const CACHE="lafay-trx-lab-v10";
 const ASSETS=["./","./index.html","./manifest.json","./icon.svg"];
 
 self.addEventListener("install",event=>{
