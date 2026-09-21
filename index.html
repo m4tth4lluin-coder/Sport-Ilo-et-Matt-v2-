@@ -292,7 +292,7 @@ function calibrationScore(r){
  if(!r)return 0;
  if(r.code==="E"){
   const l=+r.left_reps||0,rr=+r.right_reps||0;
-  return l&&rr?Math.min(l,rr):Math.max(l,rr);
+  return l&&rr?Math.min(l,rr):0;
  }
  return +r.reps||0;
 }
@@ -396,7 +396,7 @@ async function saveCalibration(){
  const rows=EX.map(e=>{
   const d=calDraft[e.code]||{};
   return {code:e.code,name:e.name,level:d.level===""?"":Number(d.level),reps:+d.reps||0,left_reps:+d.left_reps||0,right_reps:+d.right_reps||0,duration_seconds:60,target_reps:calibrationTarget({...d,code:e.code})};
- }).filter(r=>r.level!==""&&(r.code==="E"?(r.left_reps>0||r.right_reps>0):r.reps>0));
+ }).filter(r=>r.level!==""&&(r.code==="E"?(r.left_reps>0&&r.right_reps>0):r.reps>0));
  if(!rows.length)return toast("Fais au moins un test avant d’enregistrer");
  try{
   await api("POST","api=calibration",{person,rows});
