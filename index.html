@@ -64,7 +64,7 @@
 
     <section id="calibration" class="view">
       <div class="hero"><div class="label">Calibration</div><h1>Séance 0</h1><p>Pour chaque exercice : choisis le niveau de difficulté, fais un maximum de <b>répétitions propres en 60 secondes</b>, puis l’app calcule une cible de départ pour la Séance 1.</p></div>
-      <div class="card tip" style="margin-top:10px"><b>Calcul de départ :</b> environ <b>70 %</b> du score du test pour chacune des <b>2 séries fixes</b>. Objectif final du Programme 1 : <b>50 reps sur S1 + 50 reps sur S2 = 100 reps</b> par exercice. Pour E, on garde la jambe la plus faible. Si la technique se dégrade, on arrête de compter même si le chrono continue.</div>
+      <div class="card tip" style="margin-top:10px"><b>Calcul de départ :</b> environ <b>70 %</b> du test sur chacune des 2 séries. De +5 à +1, la cible est plafonnée à <b>15/15</b> car ce seuil fait passer au niveau plus difficile. Au niveau 0, l’objectif devient <b>50/50</b>. Pour E, on garde la jambe la plus faible.</div>
 
       <div class="section">Qui se calibre ?</div>
       <div class="person"><button id="pmatt0" class="on matt">Matt</button><button id="pilo0">Ilo</button></div>
@@ -273,12 +273,12 @@ function renderAll(){
 function renderWeeks(){
  $("#weeks").style.gridTemplateColumns="1fr";
  $("#weeks").innerHTML='<button class="on" disabled>Programme 1<br>2 séries fixes</button>';
- $("#weekInfo").textContent="2 séries à chaque exercice. Si la séance passe proprement, on augmente les répétitions à la séance suivante. Objectif final : 50 reps sur la série 1 ET 50 reps sur la série 2, soit 100 reps par exercice.";
+ $("#weekInfo").textContent="Règle P1 : de +5 à +1, 15/15 valide le niveau et l’app recommande le niveau plus difficile suivant. Au niveau 0, on monte jusqu’à 50/50. Après 50/50 au niveau 0, les niveaux négatifs deviennent un bonus d’attente.";
 }
 function levelInput(e,d){
  const levels=[5,4,3,2,1,0,-1,-2,-3,-4,-5];
  const opts=['<option value="">Choisir…</option>'].concat(levels.map(n=>{
-  const suffix=n===5?' — plus facile':n===0?' — référence':n===-5?' — plus difficile':'';
+  const suffix=n===5?' — plus facile':n===0?' — référence':n<0?' — bonus':n===-5?' — plus difficile':'';
   return '<option value="'+n+'" '+(String(d.level??"")===String(n)?"selected":"")+'>'+n+suffix+'</option>';
  }));
  return '<select data-code="'+e.code+'" data-k="level">'+opts.join("")+'</select>';
@@ -299,37 +299,78 @@ function calibrationScore(r){
  return +r.reps||0;
 }
 function calibrationTarget(r){
- const score=calibrationScore(r);
- return score>0?Math.min(50,Math.max(1,Math.floor(score*.70))):0;
+ const score=calibrationScore(r),level=Number(r?.level);
+ if(score<=0)return 0;
+ const cap=Number.isFinite(level)&&level>0?15:50;
+ return Math.min(cap,Math.max(1,Math.floor(score*.70)));
 }
 function calibrationTargetTotal(r){
  return calibrationTarget(r)*2;
 }
+function levelZeroValidated(code,p=person){
+ for(const s of state.sessions){
+  if(s.person!==p)continue;
+  const r=(s.rows||[]).find(x=>x.code===code);if(!r)continue;
+  const lev=Number(r.level??r.angle);
+  const a=+(r.sets||[])[0]||0,b=+(r.sets||[])[1]||0;
+  if(lev===0&&a>=50&&b>=50)return true;
+ }
+ return false;
+}
+function pendingLevelZeroCount(p=person){
+ return EX.filter(e=>!levelZeroValidated(e.code,p)).length;
+}
+function progressionAdvice(code,p,row){
+ if(!row)return "";
+ const lev=Number(row.level??row.angle),a=+(row.sets||[])[0]||0,b=+(row.sets||[])[1]||0;
+ if(!Number.isFinite(lev))return "Choisis un niveau de difficulté pour activer l’assistant de progression.";
+ if(lev>0){
+  if(a>=15&&b>=15){
+   const next=lev-1;
+   return "✅ Niveau "+lev+" validé à 15/15. Prochaine séance recommandée : <b>niveau "+next+"</b>.";
+  }
+  return "En progression niveau "+lev+" : cible <b>S1 "+Math.min(15,a+1)+"/15 • S2 "+Math.min(15,b+1)+"/15</b>.";
+ }
+ if(lev===0){
+  if(a>=50&&b>=50){
+   const pending=Math.max(0,pendingLevelZeroCount(p)-1);
+   return pending>0
+    ?"✅ <b>Programme 1 validé pour cet exercice.</b> Niveau -1 optionnel pendant que "+pending+" autre"+(pending>1?"s":"")+" exercice"+(pending>1?"s":"")+" rattrape"+(pending>1?"nt":"")+" le 50/50."
+    :"✅ <b>Programme 1 validé pour cet exercice.</b> Tous les exercices sont au 50/50 niveau 0.";
+  }
+  return "Niveau 0 : prochaine cible <b>S1 "+Math.min(50,a+1)+"/50 • S2 "+Math.min(50,b+1)+"/50</b>.";
+ }
+ if(!levelZeroValidated(code,p)){
+  return "⚠ Niveau négatif utilisé avant validation du 50/50 au niveau 0. L’app le laisse possible, mais ne le recommande pas encore.";
+ }
+ if(lev<=-5)return "Bonus d’attente : niveau -5. P1 est déjà validé au niveau 0.";
+ if(a>=15&&b>=15)return "Bonus d’attente : "+lev+" validé à 15/15. Tu peux essayer <b>niveau "+(lev-1)+"</b> si tu veux continuer à durcir.";
+ return "Bonus d’attente niveau "+lev+" : cible indicative <b>S1 "+Math.min(15,a+1)+"/15 • S2 "+Math.min(15,b+1)+"/15</b>.";
+}
 function calLevelSelect(code,value){
  const levels=[5,4,3,2,1,0,-1,-2,-3,-4,-5];
- return '<select data-cal-code="'+code+'" data-cal-k="level"><option value="">Choisir…</option>'+levels.map(n=>'<option value="'+n+'" '+(String(value??"")===String(n)?"selected":"")+'>'+n+(n===5?' — plus facile':n===0?' — référence':n===-5?' — plus difficile':'')+'</option>').join("")+'</select>';
+ return '<select data-cal-code="'+code+'" data-cal-k="level"><option value="">Choisir…</option>'+levels.map(n=>'<option value="'+n+'" '+(String(value??"")===String(n)?"selected":"")+'>'+n+(n===5?' — plus facile':n===0?' — référence':n<0?' — bonus':'')+'</option>').join("")+'</select>';
 }
 function renderSession(){
  const n=2;
  $("#exerciseList").innerHTML=EX.map(e=>{
   const prev=lastRow(e.code,person);
   const cal=calibrationRow(e.code,person);
-  const d=draft[e.code]||{sets:Array(n).fill(""),level:cal?String(cal.level??""):"",rir:2,pain:0,note:"",validated:Array(n).fill(false)};
+  const d=draft[e.code]||{sets:Array(n).fill(""),level:prev?String(prev.row.level??prev.row.angle??""):(cal?String(cal.level??""):""),rir:2,pain:0,note:"",validated:Array(n).fill(false)};
   if(d.sets.length!==n)d.sets=Array(n).fill("").map((_,i)=>d.sets[i]??"");
   if(!Array.isArray(d.validated)||d.validated.length!==n)d.validated=Array(n).fill(false);
   draft[e.code]=d;
   let prevHtml='<div class="prev">Dernière fois : aucune donnée.</div>';
   if(prev){
-   const pr=prev.row,lev=pr.level??pr.angle??"—";
-   const s1=+(pr.sets||[])[0]||0,s2=+(pr.sets||[])[1]||0,total=s1+s2;
-   const done=s1>=50&&s2>=50;
-   const next1=Math.min(50,s1+1),next2=Math.min(50,s2+1);
-   prevHtml='<div class="prev"><b>Dernière fois :</b> niveau '+esc(lev)+' — <b>S1 '+s1+'/50 • S2 '+s2+'/50</b> — '+total+'/100 reps'+
-    '<div class="cal-target">'+(done?'✅ Objectif atteint : 50 reps sur chacune des 2 séries.':'Prochaine cible si propre : <b>S1 '+next1+' • S2 '+next2+'</b>.')+'</div></div>';
+   const pr=prev.row,lev=Number(pr.level??pr.angle),s1=+(pr.sets||[])[0]||0,s2=+(pr.sets||[])[1]||0,total=s1+s2;
+   const denom=lev>0?15:(lev===0?50:15);
+   prevHtml='<div class="prev"><b>Dernière fois :</b> niveau '+esc(Number.isFinite(lev)?lev:"—")+' — <b>S1 '+s1+'/'+denom+' • S2 '+s2+'/'+denom+'</b> — '+total+' reps'+
+    '<div class="cal-target">'+progressionAdvice(e.code,person,pr)+'</div></div>';
   }else if(cal){
-   const score=calibrationScore(cal),target=calibrationTarget(cal),targetTotal=calibrationTargetTotal(cal);
+   const score=calibrationScore(cal),target=calibrationTarget(cal),targetTotal=calibrationTargetTotal(cal),lev=Number(cal.level);
    const detail=cal.code==="E"?'G '+(+cal.left_reps||0)+' / D '+(+cal.right_reps||0)+' → score '+score:score+' reps';
-   prevHtml='<div class="prev"><b>Séance 0 :</b> niv. '+esc(cal.level)+' • '+detail+' en 60 s<div class="cal-target">Cible Séance 1 : <b>'+target+' reps sur S1 + '+target+' reps sur S2</b> = '+targetTotal+' reps totales. Objectif final P1 : <b>50 + 50 = 100</b>.</div></div>';
+   const rule=lev>0?'Seuil du niveau : <b>15/15</b>.':lev===0?'Objectif niveau 0 : <b>50/50</b>.':'Niveau négatif = bonus après validation du niveau 0.';
+   prevHtml='<div class="prev"><b>Séance 0 :</b> niv. '+esc(cal.level)+' • '+detail+' en 60 s<div class="cal-target">Départ conseillé : <b>'+target+' reps sur S1 + '+target+' reps sur S2</b> = '+targetTotal+' reps. '+rule+'</div></div>';
   }
   return '<div class="card exercise">'+
    '<div class="exhead"><div class="code">'+e.code+'</div><div><div class="exname">'+e.name+'</div><div class="sub">'+n+' séries • '+e.muscles+'</div></div></div>'+
@@ -372,7 +413,7 @@ function renderCalibration(){
     '<div class="exhead"><div class="code">'+e.code+'</div><div><div class="exname">'+e.name+'</div><div class="sub">'+e.muscles+'</div></div></div>'+
     '<div class="fields" style="margin-top:10px"><div class="field"><label>Niveau de difficulté (5 à -5)</label>'+calLevelSelect(e.code,d.level)+'</div><div class="field"><label>Test</label><button class="btn secondary" data-cal-start="'+e.code+'">▶ 60 secondes</button></div></div>'+
     reps+
-    '<div class="cal-target">'+(score>0?'Score retenu : <b>'+score+'</b> • Départ Séance 1 : <b>'+target+' reps sur S1 + '+target+' reps sur S2</b> = <b>'+(target*2)+' reps totales</b> • objectif final : 50 + 50':'Entre le résultat pour calculer la cible S1.')+'</div>'+
+    '<div class="cal-target">'+(score>0?'Score retenu : <b>'+score+'</b> • Départ Séance 1 : <b>'+target+' reps sur S1 + '+target+' reps sur S2</b> = <b>'+(target*2)+' reps</b> • '+(Number(d.level)>0?'seuil : 15/15':Number(d.level)===0?'objectif : 50/50':'bonus après niveau 0'):'Entre le résultat pour calculer la cible S1.')+'</div>'+
     (e.code==="E"?'<div class="sub" style="margin-top:6px">La cible est calculée sur la jambe la plus faible.</div>':'')+
     (e.code==="F"?'<div class="sub" style="margin-top:6px">Squat sauté : ne compte plus dès que la hauteur ou la réception se dégrade.</div>':'')+
   '</div>';
@@ -445,7 +486,9 @@ function computeSummary(rows,duration){
   const prev=lastRow(r.code,person,level),best=bestTotal(r.code,person,level);
   const isPr=total>best; if(isPr)prs++;
   const isImp=prev&&total>rowTotal(prev.row);if(isImp)improved++;
-  const a=+(r.sets||[])[0]||0,b=+(r.sets||[])[1]||0,done=a>=50&&b>=50; details.push((done?"✅ ":(isPr?"🏆 ":""))+(isImp?"↗ ":"")+r.name+" : S1 "+a+"/50 • S2 "+b+"/50 • "+total+"/100"+(level?" • niv. "+level:""));
+  const a=+(r.sets||[])[0]||0,b=+(r.sets||[])[1]||0,lev=Number(r.level),done0=lev===0&&a>=50&&b>=50,pass15=lev>0&&a>=15&&b>=15;
+  let rule=done0?"P1 validé":pass15?"niveau "+lev+" validé → "+(lev-1):lev===0?"objectif 50/50":lev<0?"bonus d’attente":"progression";
+  details.push(((done0||pass15)?"✅ ":(isPr?"🏆 ":""))+(isImp?"↗ ":"")+r.name+" : S1 "+a+" • S2 "+b+" • niv. "+(Number.isFinite(lev)?lev:"—")+" • "+rule);
  });
  return {duration,total:rows.reduce((a,r)=>a+rowTotal(r),0),prs,improved,pain:Math.max(0,...rows.map(r=>+r.pain||0)),details};
 }
